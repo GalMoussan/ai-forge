@@ -91,9 +91,20 @@ const variants = {
 // Always wrap with useReducedMotion() check
 ```
 
+## Agents
+| Agent | Model | Responsibility |
+|-------|-------|---------------|
+| `ui-agent` | sonnet | React components, Tailwind, Framer Motion |
+| `backend-agent` | sonnet | Supabase, API routes, RLS, realtime |
+| `copy-agent` | haiku | All marketing copy → `src/lib/copy.ts` |
+| `scaffold-agent` | haiku | Config files, boilerplate, setup |
+
 ## Commands
 | Command | Description |
 |---------|-------------|
+| `/task-execute T001` | Execute a task from the task board |
+| `/build-component VoteButton` | Scaffold a new React component |
+| `/design-schema CreateIdea` | Design a Zod validation schema |
 | `bun run dev` | Start dev server (localhost:3000) |
 | `bun run typecheck` | Type check without building |
 | `bun run test` | Run Vitest unit tests |
