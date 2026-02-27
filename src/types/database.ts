@@ -27,6 +27,7 @@ export interface Idea {
   funding_raised: number          // cents
   tags: string[]
   image_url: string | null
+  pledge_amount: number | null  // cents — user's pledge amount when payments are enabled
 }
 
 export interface Support {
@@ -98,6 +99,7 @@ export type Database = {
           funding_raised: number
           tags: string[]
           image_url: string | null
+          pledge_amount: number | null
         }
         Insert: {
           title: string
@@ -109,6 +111,7 @@ export type Database = {
           funding_goal?: number | null
           tags?: string[]
           image_url?: string | null
+          pledge_amount?: number | null
         }
         Update: {
           title?: string
@@ -123,6 +126,7 @@ export type Database = {
           funding_raised?: number
           tags?: string[]
           image_url?: string | null
+          pledge_amount?: number | null
         }
         Relationships: []
       }
