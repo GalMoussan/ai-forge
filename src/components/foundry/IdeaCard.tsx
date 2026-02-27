@@ -9,10 +9,19 @@ import { COPY } from '@/lib/copy'
 
 interface IdeaCardProps {
   idea: IdeaWithProfile
+  onOpenDrawer?: () => void
 }
 
-export function IdeaCard({ idea }: IdeaCardProps) {
+export function IdeaCard({ idea, onOpenDrawer }: IdeaCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const handleCardClick = () => {
+    if (onOpenDrawer) {
+      onOpenDrawer()
+    } else {
+      setIsExpanded(e => !e)
+    }
+  }
   const progressPct = Math.min(100, Math.round((idea.vote_count / idea.vote_threshold) * 100))
   const username = idea.profiles?.username ?? 'Anonymous'
   const initial = username[0]?.toUpperCase() ?? '?'
@@ -22,9 +31,13 @@ export function IdeaCard({ idea }: IdeaCardProps) {
       {/* Clickable card body */}
       <button
         className="flex-1 p-6 text-left hover:bg-gray-50/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-inset"
-        onClick={() => setIsExpanded(e => !e)}
-        aria-expanded={isExpanded}
-        aria-label={`${idea.title} — click to ${isExpanded ? 'collapse' : 'expand'} discussion`}
+        onClick={handleCardClick}
+        aria-expanded={onOpenDrawer ? undefined : isExpanded}
+        aria-label={
+          onOpenDrawer
+            ? `${idea.title} — click to open details`
+            : `${idea.title} — click to ${isExpanded ? 'collapse' : 'expand'} discussion`
+        }
       >
         <div className="flex items-start justify-between gap-3 mb-3">
           <Badge variant="category">{idea.category}</Badge>
