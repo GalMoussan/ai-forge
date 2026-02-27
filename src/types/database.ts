@@ -58,29 +58,116 @@ export interface CommentWithProfile extends Comment {
 }
 
 // Database schema type for Supabase client
-export interface Database {
+export type Database = {
+  __InternalSupabase: {
+    PostgrestVersion: '12'
+  }
   public: {
     Tables: {
       profiles: {
-        Row: Profile
-        Insert: Omit<Profile, 'created_at'>
-        Update: Partial<Omit<Profile, 'id' | 'created_at'>>
+        Row: {
+          id: string
+          username: string | null
+          avatar_url: string | null
+          created_at: string
+        }
+        Insert: {
+          id: string
+          username?: string | null
+          avatar_url?: string | null
+        }
+        Update: {
+          username?: string | null
+          avatar_url?: string | null
+        }
+        Relationships: []
       }
       ideas: {
-        Row: Idea
-        Insert: Omit<Idea, 'id' | 'created_at' | 'vote_count' | 'backer_count' | 'funding_raised'>
-        Update: Partial<Omit<Idea, 'id' | 'created_at'>>
+        Row: {
+          id: string
+          created_at: string
+          title: string
+          description: string
+          submitter_id: string | null
+          category: IdeaCategory
+          status: IdeaStatus
+          vote_count: number
+          backer_count: number
+          vote_threshold: number
+          funding_goal: number | null
+          funding_raised: number
+          tags: string[]
+          image_url: string | null
+        }
+        Insert: {
+          title: string
+          description: string
+          category: IdeaCategory
+          status?: IdeaStatus
+          submitter_id?: string | null
+          vote_threshold?: number
+          funding_goal?: number | null
+          tags?: string[]
+          image_url?: string | null
+        }
+        Update: {
+          title?: string
+          description?: string
+          category?: IdeaCategory
+          status?: IdeaStatus
+          submitter_id?: string | null
+          vote_count?: number
+          backer_count?: number
+          vote_threshold?: number
+          funding_goal?: number | null
+          funding_raised?: number
+          tags?: string[]
+          image_url?: string | null
+        }
+        Relationships: []
       }
       supports: {
-        Row: Support
-        Insert: Omit<Support, 'id' | 'created_at'>
-        Update: never
+        Row: {
+          id: string
+          created_at: string
+          idea_id: string
+          user_id: string
+          type: SupportType
+          amount: number | null
+        }
+        Insert: {
+          idea_id: string
+          user_id: string
+          type: SupportType
+          amount?: number | null
+        }
+        Update: {
+          amount?: number | null
+        }
+        Relationships: []
       }
       comments: {
-        Row: Comment
-        Insert: Omit<Comment, 'id' | 'created_at'>
-        Update: Partial<Pick<Comment, 'content'>>
+        Row: {
+          id: string
+          created_at: string
+          idea_id: string
+          user_id: string
+          content: string
+          parent_id: string | null
+        }
+        Insert: {
+          idea_id: string
+          user_id: string
+          content: string
+          parent_id?: string | null
+        }
+        Update: {
+          content?: string
+        }
+        Relationships: []
       }
     }
+    Views: Record<string, never>
+    Functions: Record<string, never>
   }
 }
