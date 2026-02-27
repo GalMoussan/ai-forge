@@ -1,12 +1,13 @@
-// AI-Forge — Single page: Hero → Idea Lab → The Foundry
-// Components will be built by ui-agent in Phase 1
+import { HeroSection } from '@/components/hero'
+import { IdeaLabSection } from '@/components/idea-lab'
+import { FoundrySection } from '@/components/foundry'
 
 export default function Home() {
   return (
     <main>
-      {/* T006: HeroSection */}
-      {/* T007: IdeaLab */}
-      {/* T009: Foundry */}
+      <HeroSection />
+      <IdeaLabSection />
+      <FoundrySection />
     </main>
   )
 }
