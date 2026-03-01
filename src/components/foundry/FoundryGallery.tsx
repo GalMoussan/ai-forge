@@ -28,16 +28,6 @@ export function FoundryGallery({ initialIdeas }: FoundryGalleryProps) {
   const filtered =
     activeCategory === 'all' ? ideas : ideas.filter(idea => idea.category === activeCategory)
 
-  if (ideas.length === 0 && activeCategory === 'all') {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <IdeaCardSkeleton key={i} />
-        ))}
-      </div>
-    )
-  }
-
   if (ideas.length === 0) {
     return (
       <div className="text-center py-24">

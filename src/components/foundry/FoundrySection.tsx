@@ -5,12 +5,14 @@ import { COPY } from '@/lib/copy'
 
 export async function FoundrySection() {
   const supabase = await createClient()
-  const { data: ideas } = await supabase
+  const { data: ideas, error } = await supabase
     .from('ideas')
     .select('*, profiles(username, avatar_url)')
     .eq('status', 'active')
     .order('vote_count', { ascending: false })
     .returns<IdeaWithProfile[]>()
+
+  if (error) console.error('[FoundrySection] Supabase error:', error.message, error.code)
 
   return (
     <section id="foundry" className="py-24 bg-background">
