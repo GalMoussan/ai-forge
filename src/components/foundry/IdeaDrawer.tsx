@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import type { IdeaWithProfile } from '@/types/database'
 import { Badge } from '@/components/ui/Badge'
 import { VoteButton } from './VoteButton'
+import { PledgeButton } from './PledgeButton'
 import { CommentThread } from './CommentThread'
 import { COPY } from '@/lib/copy'
 
@@ -163,6 +164,11 @@ export function IdeaDrawer({ idea, onClose }: IdeaDrawerProps) {
                       transition={progressTransition}
                     />
                   </div>
+                  {process.env.NEXT_PUBLIC_PAYMENTS_ENABLED === 'true' && (
+                    <div className="mt-4">
+                      <PledgeButton ideaId={idea.id} />
+                    </div>
+                  )}
                 </div>
 
                 {/* Submitter */}
