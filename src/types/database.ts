@@ -1,7 +1,7 @@
 // Auto-generated types from Supabase schema
 // Do not edit column names without updating migrations
 
-export type IdeaStatus = 'active' | 'threshold_reached' | 'building' | 'launched'
+export type IdeaStatus = 'active' | 'threshold_reached' | 'building' | 'launched' | 'flagged'
 export type SupportType = 'vote' | 'pledge'
 export type IdeaCategory = 'automation' | 'creativity' | 'productivity' | 'analysis' | 'other'
 
@@ -28,6 +28,7 @@ export interface Idea {
   tags: string[]
   image_url: string | null
   pledge_amount: number | null  // cents — user's pledge amount when payments are enabled
+  is_flagged: boolean
 }
 
 export interface Support {
@@ -100,6 +101,7 @@ export type Database = {
           tags: string[]
           image_url: string | null
           pledge_amount: number | null
+          is_flagged: boolean
         }
         Insert: {
           title: string
@@ -127,6 +129,7 @@ export type Database = {
           tags?: string[]
           image_url?: string | null
           pledge_amount?: number | null
+          is_flagged?: boolean
         }
         Relationships: []
       }
