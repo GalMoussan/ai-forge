@@ -38,6 +38,7 @@ export interface Support {
   user_id: string
   type: SupportType
   amount: number | null           // cents, Phase 2 pledges only
+  stripe_session_id?: string | null
 }
 
 export interface Comment {
@@ -141,15 +142,18 @@ export type Database = {
           user_id: string
           type: SupportType
           amount: number | null
+          stripe_session_id: string | null
         }
         Insert: {
           idea_id: string
           user_id: string
           type: SupportType
           amount?: number | null
+          stripe_session_id?: string | null
         }
         Update: {
           amount?: number | null
+          stripe_session_id?: string | null
         }
         Relationships: []
       }
