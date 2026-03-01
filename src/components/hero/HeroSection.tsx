@@ -26,7 +26,7 @@ export function HeroSection() {
           aria-hidden="true"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/96 via-background/88 to-background/96" />
+        <div className="absolute inset-0 bg-background/[0.92]" />
       </div>
 
       {/* Content */}
