@@ -1,17 +1,21 @@
 'use client'
+import { useEffect, useRef } from 'react'
 import { useReducedMotion, motion, AnimatePresence } from 'framer-motion'
 import { useVote } from '@/lib/hooks/useVote'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { useAnalytics } from '@/lib/analytics'
 import { COPY } from '@/lib/copy'
 
 interface VoteButtonProps {
   ideaId: string
   initialCount: number
+  category: string
 }
 
-export function VoteButton({ ideaId, initialCount }: VoteButtonProps) {
+export function VoteButton({ ideaId, initialCount, category }: VoteButtonProps) {
   const shouldReduceMotion = useReducedMotion()
   const { user } = useAuth()
+  const track = useAnalytics()
   // For initial voted state: in a real app you'd check if user has already voted
   // We optimistically start as false; the API handles idempotent deduplication
   const { count, voted, toggle, isLoading } = useVote({
@@ -19,6 +23,14 @@ export function VoteButton({ ideaId, initialCount }: VoteButtonProps) {
     initialCount,
     initialVoted: false,
   })
+
+  const prevVotedRef = useRef(false)
+  useEffect(() => {
+    if (!prevVotedRef.current && voted) {
+      track('vote', { idea_id: ideaId, category })
+    }
+    prevVotedRef.current = voted
+  }, [voted, ideaId, category, track])
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation() // Don't expand card

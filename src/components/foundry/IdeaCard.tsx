@@ -88,7 +88,7 @@ export function IdeaCard({ idea, onOpenDrawer }: IdeaCardProps) {
           </div>
           <span className="text-body-sm text-text-muted">{username}</span>
         </div>
-        <VoteButton ideaId={idea.id} initialCount={idea.vote_count} />
+        <VoteButton ideaId={idea.id} initialCount={idea.vote_count} category={idea.category} />
       </div>
 
       {/* Expandable comment thread */}

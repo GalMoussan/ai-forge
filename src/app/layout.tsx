@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import PlausibleProvider from 'next-plausible'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -33,9 +34,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const domain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN ?? 'ai-forge.app'
   return (
     <html lang="en">
       <head>
+        <PlausibleProvider domain={domain} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>

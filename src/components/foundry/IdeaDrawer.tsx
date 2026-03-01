@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/Badge'
 import { VoteButton } from './VoteButton'
 import { PledgeButton } from './PledgeButton'
 import { CommentThread } from './CommentThread'
+import { useAnalytics } from '@/lib/analytics'
 import { COPY } from '@/lib/copy'
 
 interface IdeaDrawerProps {
@@ -15,6 +16,7 @@ interface IdeaDrawerProps {
 
 export function IdeaDrawer({ idea, onClose }: IdeaDrawerProps) {
   const shouldReduceMotion = useReducedMotion()
+  const track = useAnalytics()
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -32,6 +34,13 @@ export function IdeaDrawer({ idea, onClose }: IdeaDrawerProps) {
       document.body.style.overflow = ''
     }
   }, [idea, handleKeyDown])
+
+  useEffect(() => {
+    if (idea) {
+      track('view_idea', { idea_id: idea.id, title: idea.title })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idea?.id])
 
   const progressPct = idea
     ? Math.min(100, Math.round((idea.vote_count / idea.vote_threshold) * 100))
@@ -154,7 +163,7 @@ export function IdeaDrawer({ idea, onClose }: IdeaDrawerProps) {
                       </p>
                       <p className="text-xs text-text-muted">{progressPct}% to threshold</p>
                     </div>
-                    <VoteButton ideaId={idea.id} initialCount={idea.vote_count} />
+                    <VoteButton ideaId={idea.id} initialCount={idea.vote_count} category={idea.category} />
                   </div>
                   <div className="h-2 bg-border rounded-full overflow-hidden">
                     <motion.div

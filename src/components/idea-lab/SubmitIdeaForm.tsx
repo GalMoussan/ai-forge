@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/Textarea'
 import { Select, type SelectOption } from '@/components/ui/Select'
 import { Badge } from '@/components/ui/Badge'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { useAnalytics } from '@/lib/analytics'
 import { COPY } from '@/lib/copy'
 import type { IdeaCategory } from '@/types/database'
 
@@ -35,6 +36,7 @@ function validate(form: FormState): Record<string, string> {
 
 export function SubmitIdeaForm() {
   const { user } = useAuth()
+  const track = useAnalytics()
 
   const [form, setForm] = useState<FormState>({ title: '', description: '', category: '' })
   const [tags, setTags] = useState<string[]>([])
@@ -127,6 +129,7 @@ export function SubmitIdeaForm() {
         })
 
         if (response.ok) {
+          track('submit_idea', { category: form.category })
           setSubmitted(true)
           // Reset form
           setForm({ title: '', description: '', category: '' })
