@@ -8,6 +8,7 @@ import { CategoryFilter } from './CategoryFilter'
 import { IdeaCard } from './IdeaCard'
 import { IdeaDrawer } from './IdeaDrawer'
 import { COPY } from '@/lib/copy'
+import { LiveBadge } from './LiveBadge'
 
 interface FoundryGalleryProps {
   initialIdeas: IdeaWithProfile[]
@@ -35,7 +36,10 @@ export function FoundryGallery({ initialIdeas }: FoundryGalleryProps) {
   return (
     <>
       <div>
-        <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
+        <div className="flex items-center justify-between gap-4">
+          <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
+          <LiveBadge />
+        </div>
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           <AnimatePresence>
             {filtered.map(idea => (

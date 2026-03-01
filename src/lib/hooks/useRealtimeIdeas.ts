@@ -32,6 +32,15 @@ export function useRealtimeIdeas(initialIdeas: Idea[]) {
           setIdeas(current => [payload.new as Idea, ...current])
         }
       )
+      .on(
+        'postgres_changes',
+        { event: 'DELETE', schema: 'public', table: 'ideas' },
+        (payload) => {
+          setIdeas(current =>
+            current.filter(idea => idea.id !== (payload.old as { id: string }).id)
+          )
+        }
+      )
       .subscribe()
 
     return () => {
