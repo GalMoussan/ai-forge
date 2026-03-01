@@ -27,7 +27,11 @@ export function IdeaCard({ idea, onOpenDrawer }: IdeaCardProps) {
   const initial = username[0]?.toUpperCase() ?? '?'
 
   return (
-    <div className="bg-surface border border-border rounded-xl shadow-card flex flex-col overflow-hidden">
+    <motion.div
+      whileHover={{ y: -4, boxShadow: '0 8px 24px 0 rgba(0,0,0,0.10)' }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className="bg-surface border border-border rounded-xl shadow-card flex flex-col overflow-hidden"
+    >
       {/* Clickable card body */}
       <button
         className="flex-1 p-6 text-left hover:bg-gray-50/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-inset"
@@ -105,6 +109,6 @@ export function IdeaCard({ idea, onOpenDrawer }: IdeaCardProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   )
 }
