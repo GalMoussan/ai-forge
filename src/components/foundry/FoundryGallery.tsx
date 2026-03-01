@@ -1,14 +1,20 @@
 'use client'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import { useRealtimeIdeas } from '@/lib/hooks/useRealtimeIdeas'
 import type { IdeaWithProfile } from '@/types/database'
 import type { IdeaCategory } from '@/types/database'
 import { CategoryFilter } from './CategoryFilter'
 import { IdeaCard } from './IdeaCard'
-import { IdeaDrawer } from './IdeaDrawer'
+import { IdeaCardSkeleton } from './IdeaCardSkeleton'
 import { COPY } from '@/lib/copy'
 import { LiveBadge } from './LiveBadge'
+
+const IdeaDrawer = dynamic(
+  () => import('./IdeaDrawer').then(m => ({ default: m.IdeaDrawer })),
+  { ssr: false }
+)
 
 interface FoundryGalleryProps {
   initialIdeas: IdeaWithProfile[]
@@ -21,6 +27,16 @@ export function FoundryGallery({ initialIdeas }: FoundryGalleryProps) {
 
   const filtered =
     activeCategory === 'all' ? ideas : ideas.filter(idea => idea.category === activeCategory)
+
+  if (ideas.length === 0 && activeCategory === 'all') {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <IdeaCardSkeleton key={i} />
+        ))}
+      </div>
+    )
+  }
 
   if (ideas.length === 0) {
     return (
