@@ -197,10 +197,7 @@ export function SubmitIdeaForm() {
             type="button"
             variant="primary"
             aria-label="Sign in to submit your idea"
-            onClick={() => {
-              // Auth UI handled in a future task — prompt user
-              setShowAuthGate(false)
-            }}
+            onClick={() => window.dispatchEvent(new CustomEvent('openAuth'))}
           >
             {COPY.auth.nav_sign_in}
           </Button>

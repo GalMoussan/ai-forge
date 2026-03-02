@@ -85,7 +85,7 @@ export function Navbar() {
                 </>
               ) : (
                 <button
-                  onClick={() => scrollTo('idea-lab')}
+                  onClick={() => window.dispatchEvent(new CustomEvent('openAuth'))}
                   className="px-4 py-2 text-sm font-semibold text-cta border border-cta/30 rounded-lg hover:bg-tag-bg transition-colors"
                 >
                   Sign in
