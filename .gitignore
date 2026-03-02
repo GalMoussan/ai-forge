@@ -32,3 +32,7 @@ next-env.d.ts
 
 # Vercel
 .vercel
+
+# Bun (use npm for Vercel compatibility — bun can still be used locally)
+bun.lock
+bun.lockb
